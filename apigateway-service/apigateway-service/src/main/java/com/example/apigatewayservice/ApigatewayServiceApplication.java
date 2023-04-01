@@ -13,6 +13,7 @@ public class ApigatewayServiceApplication {
 		SpringApplication.run(ApigatewayServiceApplication.class, args);
 	}
 
+	// HTTP 요청과 응답의 추적정보를 저장하는 인터페이스
 	@Bean
 	public HttpTraceRepository httpTraceRepository() {
 		return new InMemoryHttpTraceRepository();

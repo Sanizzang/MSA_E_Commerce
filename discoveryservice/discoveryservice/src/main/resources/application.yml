@@ -1,11 +1,19 @@
+# Spring Cloud Netflix Eureka를 사용하여 서비스 디스커버리를 구성하는 설정
 server:
+  # 애플리케이션 포트 설정
   port: 8761
 
+# Spring Boot 애플리케이션을 구성하기 위한 일반적인 설정
 spring:
+  # 애플리케이션 이름 지정
   application:
     name: discoveryservice
 
+# Spring Cloud Netflix Eureka 구성을 지정
 eureka:
+  # Eureka 클라이언트 구성을 지정
   client:
+    # 현재 애플리케이션을 Eureka 서버에 등록할지 여부를 지정
     register-with-eureka: false
+    # Eureka 서비스에서 서비스 등록 정보를 가져올지 여부를 지정
     fetch-registry: false

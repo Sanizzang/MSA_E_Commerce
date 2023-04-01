@@ -1,7 +1,11 @@
+# Spring Cloud Config를 사용하여 외부 구성 속성을 가져오는 것을 의미
 spring:
   cloud:
     config:
+      # 구성 서버의 위치
       uri: http://127.0.0.1:8888
+      # 가져올 구성 파일의 이름 지정
       name: ecommerce
+# 활성화할 프로파일 지정
 #  profiles:
 #    active: prod

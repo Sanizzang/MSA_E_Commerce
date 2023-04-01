@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Configuration;
 public class FilterConfig {
 
 //    @Bean
+    // Spring Cloud Gateway에서 라우팅을 구성하는 데 사용되는 객체
     public RouteLocator gatewayRoutes(RouteLocatorBuilder builder) {
         return builder.routes()
                 .route(r -> r.path("/first-service/**")

@@ -1,3 +1,6 @@
+# User-Service 애플리케이션 구성 파일
+
+# 애플리케이션의 서버 포트를 0으로 설정. 이는 랜덤 포트를 사용하여 애플리케이션을 실행하도록 한다.
 server:
   port: 0
 
@@ -20,6 +23,8 @@ spring:
 #    url: jdbc:h2:mem:testdb
 #    username: sa
 #    password: 1234
+
+# Eureka에 등록되는 인스턴스 ID 설정
 eureka:
   instance:
     instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
@@ -32,6 +37,7 @@ eureka:
 greeting:
   message: Welcome to the Simple E-commerce.
 
+# 로거의 로그 레벨을 DEBUG로 설정
 logging:
   level:
     com.example.userservice.client: DEBUG
@@ -40,6 +46,7 @@ token:
   expiration_time: 86400000
   secret: user_token
 
+# Spring Boot Actuator를 통해 노출할 엔드포인트 지정
 management:
   endpoint:
     web:

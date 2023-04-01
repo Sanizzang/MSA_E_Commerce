@@ -32,6 +32,7 @@ public class UserController {
         this.userService = userService;
     }
 
+    // 서버의 상태 체크
     @GetMapping("/health_check")
     public String status() {
         return String.format("It's Working in User Service"
@@ -47,11 +48,17 @@ public class UserController {
         return greeting.getMessage();
     }
 
+    // POST: 새로운 사용자를 생성
     @PostMapping("/users")
     public ResponseEntity<ResponseUser> createUser(@RequestBody RequestUser user) {
+        // 객체 간 매핑을 위한 라이브러리
         ModelMapper mapper = new ModelMapper();
+        // 매핑 전략을 설정하는 메서드
+        // 이 코드는 source와 destination 필드의 이름과 타입이 완전히 일치하는 경우에만 매핑을 수행
+        // 이렇게 함으로써 모델간의 매핑이 더욱 엄격하게 이뤄져 의도치 않은 필드 매핑 오류를 방지할 수 있음
         mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
 
+        // RequestUser -> UserDto
         UserDto userDto = mapper.map(user, UserDto.class);
         userService.createUser(userDto);
 

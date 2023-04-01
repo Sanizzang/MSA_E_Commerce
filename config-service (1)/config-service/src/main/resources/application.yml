@@ -1,24 +1,40 @@
+# Spring Cloud Config Server의 구성 파일 설정
+
+# Config Server의 HTTP 포트 번호 정의
 server:
   port:8888
 
 spring:
   application:
+    # Config Server의 애플리케이션 이름 정의
     name: config-service
+  # Config Server가 RabbitMQ와 통신하기 위한 RabbitMQ 서버의 연결 정보 정의
+  # 이 설정은 기본적으로 Config Server의 기본 메시지 브로커로 사용되며
+  # 애플리케이션의 설정 업데이트를 브로드캐스트하기 위해 사용됨
   rabbitmq:
     host: 127.0.0.1
     port: 5672
     username: guest
     password: guest
+  # Config Server의 활성 프로파일 설정
   profiles:
+    # native를 사용하여 로컬 파일 시스템에서 구성 파일을 가져옴
+    # git 프로파일도 지원되며, Git 저장소에서 구성 파일을 가져올 수 있음
     active: native
+  # Config Server를 구성하는 속성을 정의
   cloud:
     config:
       server:
+        # 로컬 파일 시스템
         native:
           search-locations: file:///${user.home}\\D:\\Study\\native-file-repo
+        # Git 저장소
         git:
           uri: https://github.com/Sanizzang/spring-cloud-config
 
+# Spring Boot Actuator의 management 엔드포인트를 구성하는 설정
+# 애플리케이션의 상태 정보와 구성 업데이트를 쉽게 확인할 수 있도록하는 Spring Boot Actuator 엔드포인트를 노출하는 것
+# Config Server가 작동 중일 때 Actuator 엔드포인트를 사용할 수 있도록 한다
 management:
   endpoints:
     web:

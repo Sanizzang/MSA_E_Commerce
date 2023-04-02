@@ -3,7 +3,7 @@ spring:
   cloud:
     config:
       # 구성 서버의 위치
-      uri: http://127.0.0.1:8888
+      uri: http://127.0.0.1:8887
       # 가져올 구성 파일의 이름 지정
       name: ecommerce
 # 활성화할 프로파일 지정

@@ -30,11 +30,11 @@ public class UserServiceApplication {
 		return new BCryptPasswordEncoder();
 	}
 
-	// Spring Security에서 인증을 수행하는데 사용됨
-	@Bean
-	AuthenticationManager authenticationManager(AuthenticationConfiguration authConfiguration) throws Exception {
-		return authConfiguration.getAuthenticationManager();
-	}
+//	// Spring Security에서 인증을 수행하는데 사용됨
+//	@Bean
+//	AuthenticationManager authenticationManager(AuthenticationConfiguration authConfiguration) throws Exception {
+//		return authConfiguration.getAuthenticationManager();
+//	}
 
 	// RestTemplate에서 Load Balancing을 사용하기 위해 사용됨
 	@Bean

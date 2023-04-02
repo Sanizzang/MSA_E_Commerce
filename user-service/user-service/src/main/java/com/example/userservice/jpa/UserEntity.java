@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 
+// 데이터베이스와 연동하여 데이터를 처리 하기 위한 객체
 @Data
 @Entity
 @Table(name = "users")

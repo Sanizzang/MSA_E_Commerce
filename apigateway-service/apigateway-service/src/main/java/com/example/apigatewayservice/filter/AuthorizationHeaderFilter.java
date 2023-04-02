@@ -28,10 +28,13 @@ HTTP 요청에 포함된 Authorization Header를 검증하는 필터.
  */
 @Component
 @Slf4j
+// Custom Filter는 AbstractGatewayFilterFactory를 상속 받아야 한다.
+// Configuration 정보가 있다면 자신의 클래스 안에서 Config라는 내부클래스를 매개변수로 등록한다.
 public class AuthorizationHeaderFilter extends AbstractGatewayFilterFactory<AuthorizationHeaderFilter.Config> {
     Environment env;
 
     public AuthorizationHeaderFilter(Environment env) {
+        super(Config.class);
         this.env = env;
     }
 
@@ -41,12 +44,14 @@ public class AuthorizationHeaderFilter extends AbstractGatewayFilterFactory<Auth
     }
 
     // login -> token -> users (with token) -> header(include token)
+    // CustomFilter 구현을 위한 apply 메소드 구현
     @Override
     public GatewayFilter apply(Config config) {
         // exchange: GatewayFilter에서 제공하는 ServerWebExchange 객체 (Spring WebFlux에서 사용). HTTP 요청 및 응답을 나태냄
         // chain: 필터 체인을 나타내는 객체
-        return (((exchange, chain) -> {
-
+        return (exchange, chain) -> {
+            // Pre Filter
+            // spring cloud gateway는 비동식 방식(Netty)이기 때문에 ServerHttpRequest라는 객체를 사용한다.(ServletRequest가 아님)
             ServerHttpRequest request = exchange.getRequest();
 
             // HTTP 요청의 Authorization 헤더가 있는지 확인
@@ -65,8 +70,9 @@ public class AuthorizationHeaderFilter extends AbstractGatewayFilterFactory<Auth
                 return onError(exchange, "JWT token is not valid", HttpStatus.UNAUTHORIZED);
             }
 
+            // Post Filter
             return chain.filter(exchange);
-        }));
+        };
     }
 
     // jwt 문자열을 파싱하여 JWT 토큰이 유효한지 검증
@@ -107,7 +113,8 @@ public class AuthorizationHeaderFilter extends AbstractGatewayFilterFactory<Auth
     // ServerWebExchange: Spring WebFlux에서 사용되는 HTTP 요청 및 응답 객체
     // err: 오류 메시지
     // httpStatus: HTTP 상태 코드
-    // Mono, Flux -> Spring WebFlux
+    // Mono -> WebFlux라고 해서 Spring 5 부터 추가된 기능
+    // 기존에 동기화 방식의 서버가 아니라 비동기 방식의 서버를 지원할 때 단일값 전달할 때 사용
     private Mono<Void> onError(ServerWebExchange exchange, String err, HttpStatus httpStatus) {
         // ServerWebExchange 객체에서 ServerHttpResponse 객체를 가져옴
         ServerHttpResponse response = exchange.getResponse();
@@ -118,6 +125,4 @@ public class AuthorizationHeaderFilter extends AbstractGatewayFilterFactory<Auth
         // 응답 반환
         return response.setComplete();
     }
-
-
 }

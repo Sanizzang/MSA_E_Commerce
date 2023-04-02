@@ -1,8 +1,7 @@
 # Spring Cloud Config Server의 구성 파일 설정
-
 # Config Server의 HTTP 포트 번호 정의
 server:
-  port:8888
+  port: 8887
 
 spring:
   application:
@@ -27,7 +26,7 @@ spring:
       server:
         # 로컬 파일 시스템
         native:
-          search-locations: file:///${user.home}\\D:\\Study\\native-file-repo
+          search-locations: D:\\Study\\native-file-repo
         # Git 저장소
         git:
           uri: https://github.com/Sanizzang/spring-cloud-config

@@ -5,6 +5,7 @@ import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+// 자바 코드로 api-gateway filter 만드는 코드
 //@Configuration
 public class FilterConfig {
 
@@ -13,7 +14,11 @@ public class FilterConfig {
     public RouteLocator gatewayRoutes(RouteLocatorBuilder builder) {
         return builder.routes()
                 .route(r -> r.path("/first-service/**")
-                        .filters(f -> f.addRequestHeader("first-request", "first-request-header")
+
+                        .filters(f ->
+                                        // request header 추가
+                                        f.addRequestHeader("first-request", "first-request-header")
+                                                // response header 추가
                                         .addResponseHeader("first-response", "first-response-header"))
                         .uri("http://localhost:8081"))
                 .route(r -> r.path("/second-service/**")

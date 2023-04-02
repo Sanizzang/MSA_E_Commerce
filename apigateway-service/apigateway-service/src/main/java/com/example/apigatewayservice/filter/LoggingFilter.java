@@ -57,6 +57,7 @@ public class LoggingFilter extends AbstractGatewayFilterFactory<LoggingFilter.Co
                 }
 
             }));
+            // OrderedGatewyaFilter를 적용함으로써 필터의 우선순위를 정할 수 있다.
         }, Ordered.HIGHEST_PRECEDENCE);
 
         return filter;

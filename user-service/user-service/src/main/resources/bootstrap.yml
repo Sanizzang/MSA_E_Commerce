@@ -2,7 +2,7 @@ spring:
   cloud:
     config:
       # 구성 서버의 URL
-      uri: http://127.0.0.1:8888
+      uri: http://127.0.0.1:8887
       # 가져올 구성 파일의 이름
       name: user-service
 #  profiles:

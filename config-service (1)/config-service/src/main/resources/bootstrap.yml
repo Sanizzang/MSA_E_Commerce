@@ -5,16 +5,16 @@ encrypt:
   # 구성할 수 있으며, 이 설정에서는 공개-개인키 알고리즘을 사용한다
 
   # key: 대칭키 알고리즘
-#  key: abcdefghijklmnopqrstuvwxyz0123456789
+  key: abcdefghijklmnopqrstuvwxyz0123456789
 
   # key-store: 공개-개인키 암호화
-  key-store:
-    # key-store 파일의 위치 지정
-    locatioon: file:///${user.home}\\D:\\Study\\keystore\\apiEncryptionKey.jks
-    # 키 스토어 파일의 비밀번호
-    password: 1q2w3e4r
-    # 사용할 공개-개인키 쌍의 별칭
-    alias: apiEncryptionKey
+#  key-store:
+#    # key-store 파일의 위치 지정
+#    locatioon: D:\\Study\\keystore\\apiEncryptionKey.jks
+#    # 키 스토어 파일의 비밀번호
+#    password: test1234
+#    # 사용할 공개-개인키 쌍의 별칭
+#    alias: apiEncryptionKey
 
 # 암호화 설정을 구성하면 Spring Cloud Config Server에서 구성 파일을 암호화하여
 # 저장하고, 클라이언트는 암호화된 구성 파일을 받아서 복호화하여 사용할 수 있다.

@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
+// Feign Client를 사용하여 order-service에서 제공하는 엔드포인트 호출
+// name: 호출할 서비스의 이름
 @FeignClient(name="order-service")
 public interface OrderServiceClient {
 

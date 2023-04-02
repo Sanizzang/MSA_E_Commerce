@@ -54,7 +54,7 @@ public class SecurityConfig {
     }
 
     private AuthenticationManager getAuthenticationFilter(HttpSecurity http) throws Exception {
-        // 인증 매니저를 구섷아는 빌더 클래스
+        // 인증 매니저를 구성하는 빌더 클래스
         AuthenticationManagerBuilder authenticationManagerBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
         // userDetailService: 사용자 인증 정보를 검색할 때 사용하는 서비스
         // passwordEncoder: 패스워드 인코딩을 위해 사용

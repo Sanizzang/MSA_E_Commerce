@@ -34,6 +34,7 @@ public class UserServiceImpl implements UserService {
     Environment env;
     RestTemplate restTemplate;
 
+    // Feign Client 사용을 위한 의존성 주입
     OrderServiceClient orderServiceClient;
 
     @Autowired
@@ -49,15 +50,19 @@ public class UserServiceImpl implements UserService {
         this.orderServiceClient = orderServiceClient;
     }
 
+    // UserDetailsService를 상속받아서 재정의 해줘야함
+    // email을 가지고 사용자를 찾아오는 메서드
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         UserEntity userEntity = userRepository.findByEmail(username);
 
         // 해당하는 사용자가 없다면
         if(userEntity == null)
+            // spring security-core에 사용자 정보를 담을 수 있는 UsernamePasswordAuthenticationToken이 있음
+            // 마찬가지로 사용자 검색이 안되었을 때, 발생할 수 있는 예외 클래스도 제공
             throw new UsernameNotFoundException(username);
 
-        // User: Spring Security에서 제공해주는
+        // User: Spring Security에서 제공해주는 User 모델
         return new User(userEntity.getEmail(), userEntity.getEncryptedPwd(), true, true, true, true, new ArrayList<>());
     }
 
@@ -99,15 +104,26 @@ public class UserServiceImpl implements UserService {
 //        String orderUrl = String.format(env.getProperty("order_service.url"), userId);
 //        ResponseEntity<List<ResponseOrder>> orderListResponse =
 //                // restTemplate.exchange RestTemplate 클래스를 사용하여 HTTP 요청을 보내고, 응답을 받아옴
-//                // 이 코드에서는 주문 서비스로 요청을 보내서 해당 사용자의 주문 목록을 가져온다.
 //                // ParameterizedTypeReference<List<Response>>()는 RestTemplate에서 제공하는 제네릭 타입을 사용하는 방법으로 List<ReponseOrder> 형식의 응답을 받기 위해 사용된다.
 //                restTemplate.exchange(orderUrl, HttpMethod.GET, null, new ParameterizedTypeReference<List<ResponseOrder>>() {
 //        });
 //
 //        List<ResponseOrder> orderList = orderListResponse.getBody();
 
+        /*
+            FeignClient -> HTTP Client
+            - REST Call을 추상화 한 Spring Cloud Netflix 라이브러리
+
+            사용법
+            - 호출하려는 HTTP Endpoint에 대한 Interface를 생성
+            - @FeignClient 선언
+
+            Load balanced 지원
+         */
+
         /* Using feign client */
         /* Feign exception handling */
+
 //        List<ResponseOrder> orderList = null;
 //
 //        try{
@@ -116,7 +132,7 @@ public class UserServiceImpl implements UserService {
 //            log.error(ex.getMessage());
 //        }
 
-        /* ErrorDecoder */
+        /* ErrorDecoder 사용 */
         List<ResponseOrder> orderList = orderServiceClient.getOrders(userId);
         userDto.setOrders(orderList);
 

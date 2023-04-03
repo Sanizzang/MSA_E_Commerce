@@ -25,6 +25,7 @@ public class UserServiceApplication {
 	}
 
 	// Spring Security에서 제공하는 암호화 도구
+	// 랜덤 Salt를 부여하여 여러번 Hash를 적용한 암호화 방식
 	@Bean
 	public BCryptPasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
@@ -36,8 +37,12 @@ public class UserServiceApplication {
 //		return authConfiguration.getAuthenticationManager();
 //	}
 
-	// RestTemplate에서 Load Balancing을 사용하기 위해 사용됨
+
 	@Bean
+	// RestTemplate에서 Load Balancing을 사용하기 위해 사용됨
+	// -> 불러오고 싶은 API의 주소를 Microservice 이름으로 가져올 수 있음
+	// ex) http://127.0.0.1:8000/order-service/%s/orders
+	// -> http://order-service/order-service/%s/orders
 	@LoadBalanced
 	public RestTemplate getRestTemplate() {
 		return new RestTemplate();

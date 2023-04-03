@@ -26,6 +26,9 @@ public class SecurityConfig {
     // 환경 변수 제공
     private final Environment env;
 
+    // WebSecurityConfigurerAdapter 클래스가 deprecated 되면서,
+    // config 메소드를 구현하는 대신 SecurityFilterChain을 반환하고 직접 Bean으로 등록하도록 설정 방법이 바뀜
+    // 권한과 관련한 메서드
     // HttpSecurity: HTTP 요청에 대한 보안 구성 지정
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -41,28 +44,32 @@ public class SecurityConfig {
         http.authorizeRequests()
                 .antMatchers("/actuator/**").permitAll() // actuator permitAll
                 .antMatchers("/error/**").permitAll()
-                .antMatchers("/**").hasIpAddress("내 IP")
+//                .antMatchers("/**").hasIpAddress("172.17.110.148")
+                .antMatchers("/**").permitAll()
                 .and()
                 .authenticationManager(authenticationManager)
+                // 이 필터를 통과시킨 데이터에 한에서만 권한을 부여하고 작업을 진행하겠다.
                 .addFilter(getAuthenticationFilter(authenticationManager));
 
         // HTTP 응답 헤더 구성
         // frame load 하게 해줌
+        // 해당 코드를 추가하지 않으면 H2가 실행이 안됨
         http.headers().frameOptions().disable();
 
         return http.build();
     }
 
+    // 인증 매니저 생성 메서드
     private AuthenticationManager getAuthenticationFilter(HttpSecurity http) throws Exception {
         // 인증 매니저를 구성하는 빌더 클래스
         AuthenticationManagerBuilder authenticationManagerBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
-        // userDetailService: 사용자 인증 정보를 검색할 때 사용하는 서비스
+        // userDetailService: 사용자 인증 정보를 검색할 때 사용하는 서비스 (userService)
         // passwordEncoder: 패스워드 인코딩을 위해 사용
         authenticationManagerBuilder.userDetailsService(userService).passwordEncoder(bCryptPasswordEncoder);
         return authenticationManagerBuilder.build();
     }
 
-    // 사용자 인증을 처리하는 필터. 사용자 이름과 비밀번호를 인증
+    // 사용자 인증을 처리하는 필터(우리가 정의한 CustomFilter). 사용자 이름과 비밀번호를 인증
     private AuthenticationFilter getAuthenticationFilter(AuthenticationManager authenticationManager) {
         return new AuthenticationFilter(authenticationManager, userService, env);
     }

@@ -8,7 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
 
-// Feign Client에서 발생한 오류를 처리하기 위한 Error Decoder를 구현한 클래스
+// Feign Client에서 발생한 오류를 처리하기 위한 ErrorDecoder를 구현한 클래스
 @Component
 public class FeignErrorDecoder implements ErrorDecoder {
     Environment env;

@@ -56,7 +56,7 @@ public class AuthorizationHeaderFilter extends AbstractGatewayFilterFactory<Auth
 
             // HTTP 요청의 Authorization 헤더가 있는지 확인
             if (!request.getHeaders().containsKey(HttpHeaders.AUTHORIZATION)) {
-                // 만약 헤더가 없다면 onError() 메서드를 호출하여 HTTP 401 Unauthorized 상태코드와 함께 오류 메시지 반환
+                // 만약 Authorization 헤더가 없다면 onError() 메서드를 호출하여 HTTP 401 Unauthorized 상태코드와 함께 오류 메시지 반환
                 return onError(exchange, "No authorization header", HttpStatus.UNAUTHORIZED);
             }
 

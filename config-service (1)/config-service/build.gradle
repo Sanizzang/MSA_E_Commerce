@@ -20,8 +20,8 @@ dependencies {
 	implementation 'org.springframework.cloud:spring-cloud-config-server'
 	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-actuator
 	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-actuator'
-	// https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-bus-amqp
-	implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-bus-amqp'
+	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-amqp
+	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-amqp'
 	// https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-bootstrap
 	implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-bootstrap'
 
